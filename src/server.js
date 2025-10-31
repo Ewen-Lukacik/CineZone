@@ -10,8 +10,8 @@ app.use(express.json()); //middleware
 app.get('/movies', movieList);
 app.get('/movies/:id', show);
 app.post('/movies', create);
-app.put('/movies', update);
-app.delete('/movies', destroy);
+app.put('/movies/:id', update);
+app.delete('/movies/:id', destroy);
 
 //categorty relateed routes
 app.get('/categories', categoryList)
