@@ -10,6 +10,7 @@ services:
       - "3000:3000"
     volumes:
       - ./src:/app/src
+      - ./package.json:/app/package.json
       - /app/node_modules
     environment:
       - PORT=3000
@@ -18,7 +19,8 @@ services:
       - DB_USER=root
       - DB_PASSWORD=example
       - DB_NAME=cinezone
-    command: ["npx", "nodemon", "src/server.js"]
+      - NODE_ENV=development
+    command: ["nodemon", "--legacy-watch", "src/server.js"]
     restart: unless-stopped
     depends_on:
       - db
