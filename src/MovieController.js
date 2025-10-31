@@ -1,14 +1,29 @@
 import database from "./database.js";
 const movieList = async (req, res) => {
 
-    const [movies] = await database.query(
-        'select * from movies'
-    );
+    const limit = parseInt(req.query.limit);
+    const min_rating = parseFloat(req.query.min_rating);
+    const category = req.query.category;
 
-    if(movies){
-        res.status(200).json(movies)
-    } else {
-        res.status(404).json({ "message": "No movies found" })
+    if(min_rating < 0 || min_rating > 10){
+        res.status(400).json({ "message": "Rating must be between 0 and 10" })
+    }
+    // console.log(limit);
+    // return
+
+    try {
+        const [movies] = await database.query(
+            'select * from movies m INNER JOIN categories c ON m.category_id = c.id WHERE rating>=? AND c.name=? LIMIT ?', [min_rating, category, limit]
+        );
+    
+        if(movies){
+            res.status(200).json(movies)
+        } else {
+            res.status(404).json({ "message": "No movies found" })
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({"message": "An error has occurred"})
     }
 
 };
