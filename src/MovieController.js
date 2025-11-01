@@ -5,16 +5,40 @@ const movieList = async (req, res) => {
     const min_rating = parseFloat(req.query.min_rating);
     const category = req.query.category;
 
+    const params = [];
+    const conditions = [];
+
     if(min_rating < 0 || min_rating > 10){
         res.status(400).json({ "message": "Rating must be between 0 and 10" })
     }
-    // console.log(limit);
-    // return
 
     try {
-        const [movies] = await database.query(
-            'select * from movies m INNER JOIN categories c ON m.category_id = c.id WHERE rating>=? AND c.name=? LIMIT ?', [min_rating, category, limit]
-        );
+        var sql = `SELECT * from movies m 
+                    INNER JOIN categories c 
+                    ON m.category_id = c.id`;
+        
+        if(min_rating){
+            conditions.push(' rating>=? ');
+            params.push(min_rating);
+        }
+
+        if(category){
+            conditions.push('c.name=? ');
+            params.push(category);
+        }
+
+        if(conditions.length != 0){
+            sql += ' WHERE ' + conditions.join(" AND ");
+        }
+
+        if(limit){
+            sql +=  ' LIMIT ? ';
+            params.push(limit);
+        }
+
+    
+        console.log(sql, params)
+        const [movies] = await database.query(sql, params);
     
         if(movies){
             res.status(200).json(movies)
@@ -116,6 +140,7 @@ export const update = async (req, res) => {
         }
     }
 };
+
 export const destroy = async (req, res) => {
     const movieId = parseInt(req.params.id);
 
