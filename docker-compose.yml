@@ -23,6 +23,8 @@ services:
     restart: unless-stopped
     depends_on:
       - db
+    networks:
+      - cinezone_network
 
   db:
     image: mysql:8.0
@@ -35,6 +37,8 @@ services:
       - "3306:3306"
     volumes:
       - ./mysql-data:/var/lib/mysql
+    networks:
+      - cinezone_network
 
   phpmyadmin:
     image: phpmyadmin:latest
@@ -47,3 +51,9 @@ services:
       PMA_PORT: 3306
     depends_on:
       - db
+    networks:
+      - cinezone_network
+
+networks:
+  cinezone_network:
+    driver: bridge
