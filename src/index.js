@@ -2,6 +2,7 @@ import express from "express";
 import categoryList from "./Controller/CategoryController.js";
 import { logger } from "./Middlewares/logger.js";
 import moviesRouter from "./routes/movies.js";
+import userRouter from "./routes/users.js";
 
 
 const app = express();
@@ -13,6 +14,7 @@ const middlewares = [
 app.use(middlewares); //middleware
 
 app.use('/movies', moviesRouter);
+app.use('/users', userRouter)
 
 //categorty relateed routes
 app.get('/categories', categoryList)
