@@ -36,7 +36,7 @@ export async function hashPassword(req, res, next){
         res.sendStatus(500);
     }
 }
-export const validateUser = [
+const validateUser = [
     body('name')
         .notEmpty().withMessage('Username required')
         .isLength({ min: 2 }).withMessage("2 characters minimum"),
@@ -52,3 +52,4 @@ export const validateUser = [
     handleValidationErrors
 ];
 
+export default validateUser;
