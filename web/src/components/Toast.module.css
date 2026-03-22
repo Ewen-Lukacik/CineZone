@@ -1,0 +1,54 @@
+.toast {
+    min-width: 280px;
+    max-width: 380px;
+    padding: 1rem 1.2rem 0.5rem;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.3s ease;
+    overflow: hidden;
+}
+
+.success {
+    background: #1a3a2a;
+    border-left: 4px solid #64ffda;
+}
+
+.error {
+    background: #3a1a1a;
+    border-left: 4px solid #ff6b6b;
+}
+
+.progressBar {
+    margin-top: 0.6rem;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.05s linear;
+}
+
+.success .progress {
+    background: #64ffda;
+}
+
+.error .progress {
+    background: #ff6b6b;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
