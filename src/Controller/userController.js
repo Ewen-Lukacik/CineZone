@@ -1,3 +1,5 @@
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import database from "../database.js";
 
 export async function createUser(req, res){
@@ -22,8 +24,51 @@ export async function createUser(req, res){
 }
 
 export async function login(req, res){
-    //TODO: check que email existe en bd, compater le mdp avec bcrypt, generer jwt pour la session et le return
-    res.status(200).json({
-        message: "Logged in successfully"
-    })
+    const { email, password } = req.body;
+
+    try{
+        //check email
+        const [users] = await database.query(
+            "SELECT * FROM users WHERE email =?", 
+            [email]
+        );
+
+        if(users.length === 0){
+            return res.status(401).send({
+                "message": "Wrong credentials1"
+            });
+        }
+
+        const user = users[0];
+
+        //check le mdp
+        const passwordMatch = await bcrypt.compare(password, user.password);
+        if(!passwordMatch){
+             return res.status(401).send({
+                "message": "Wrong credentials2"
+            });
+        }
+
+        //generer le jwt
+        const token = jwt.sign(
+            {
+                id: user.id,
+                email: user.email
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: "24h"
+            }
+        );
+
+        res.status(200).json({
+            token
+        });
+
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({
+            "message": "an error has occured"
+        })
+    }
 }
