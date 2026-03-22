@@ -2,12 +2,12 @@ services:
   api:
     container_name: cinezone_api
     build:
-      context: .
+      context: ./api
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
     volumes:
-      - ./src:/app/src
+      - ./api/src:/app/src
       # - ./package.json:/app/package.json
       # - /app/node_modules
     environment:

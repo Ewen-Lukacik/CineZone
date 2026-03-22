@@ -1,9 +1,13 @@
+import cors from "cors";
 import express from "express";
 import categoryList from "./Controller/CategoryController.js";
 import { logger } from "./Middlewares/logger.js";
 import moviesRouter from "./routes/movies.js";
 import userRouter from "./routes/users.js";
 
+app.use(cors({
+  origin: "http://localhost:5173"
+}));
 
 const app = express();
 
