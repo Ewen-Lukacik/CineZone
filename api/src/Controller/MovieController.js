@@ -13,8 +13,9 @@ const movieList = async (req, res) => {
     }
 
     try {
-        var sql = `SELECT * from movies m 
-                    INNER JOIN categories c 
+        var sql = `SELECT m.id, m.title, m.director, m.release_year, m.rating, m.category_id, c.name
+                    FROM movies m
+                    INNER JOIN categories c
                     ON m.category_id = c.id`;
         
         if(min_rating){
