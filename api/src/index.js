@@ -5,11 +5,11 @@ import { logger } from "./Middlewares/logger.js";
 import moviesRouter from "./routes/movies.js";
 import userRouter from "./routes/users.js";
 
+
+const app = express();
 app.use(cors({
   origin: "http://localhost:5173"
 }));
-
-const app = express();
 
 const middlewares = [
   express.json(),
