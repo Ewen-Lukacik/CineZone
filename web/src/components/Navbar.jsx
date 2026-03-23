@@ -12,7 +12,9 @@ export default function NavBar(){
             <div className={styles.right}>
                 {user ? (
                     <>
-                        <span className={styles.username}>Bonjour, {user.name}</span>
+                        <Link to="/profile" className={styles.username}>
+                            Bonjour, {user.name}
+                        </Link>
                         <button className={styles.logoutBtn} onClick={logout}>Logout</button>
                     </>
                 ) : (
