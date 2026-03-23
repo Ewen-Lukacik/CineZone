@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import ProtectedRoute from './components/ProtectedRoutes'
+import Admin from './pages/Admin'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
@@ -20,13 +21,12 @@ function App() {
                 <Profile />
             </ProtectedRoute>
         } />
-
+        
         <Route path="/admin" element={
             <ProtectedRoute adminOnly={true}>
-                {/* <Admin /> */}
+                <Admin />
             </ProtectedRoute>
         } />
-        
       </Routes>
     </BrowserRouter>
   )

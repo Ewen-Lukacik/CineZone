@@ -21,3 +21,43 @@ export async function getMovies({limit = 25, min_rating, category} = {}){
     }
     return response.json();
 }
+
+export async function createMovie(token, movieData) {
+    const response = await fetch(`${BASE_URL}/movies`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(movieData)
+    });
+
+    if (!response.ok) throw new Error('Failed to create movie');
+    return response.json();
+}
+
+export async function updateMovie(token, id, movieData) {
+    const response = await fetch(`${BASE_URL}/movies/${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(movieData)
+    });
+
+    if (!response.ok) throw new Error('Failed to update movie');
+    return response.json();
+}
+
+export async function deleteMovie(token, id) {
+    const response = await fetch(`${BASE_URL}/movies/${id}?role=admin`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) throw new Error('Failed to delete movie');
+    return response.json();
+}

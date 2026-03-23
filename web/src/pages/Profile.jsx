@@ -46,7 +46,7 @@ export default function Profile(){
                                 <span>Admin Side</span>
                                 <p>You can manage the entire catalog</p>
                             </div>
-                            <Link    to="/admin" className={styles.adminBtn}>
+                            <Link to="/admin" className={styles.adminBtn}>
                                 Admin Panel →
                             </Link>
                         </div>

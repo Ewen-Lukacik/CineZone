@@ -5,7 +5,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }){
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-
+    
     function login(token, user){
         //maj pour la persistance de la session
         localStorage.setItem('token', token);
@@ -22,7 +22,6 @@ export function AuthProvider({ children }){
         //maj pour l'état en direct sur la page 
         setToken(null);
         setUser(null);
-        navigate('/');
     }
 
     return(
