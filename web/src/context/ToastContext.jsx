@@ -27,7 +27,7 @@ function ToastContainer({ toasts }) {
     return (
         <div style={{
             position: 'fixed',
-            top: '1rem',
+            bottom: '1rem',
             right: '1rem',
             display: 'flex',
             flexDirection: 'column',

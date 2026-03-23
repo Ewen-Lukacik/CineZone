@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import NavBar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
 import { useMe } from "../hooks/useMe";
@@ -8,7 +9,14 @@ export default function Profile(){
     const { profile, isLoading } = useMe();
 
     if(isLoading){
-        return <p>Loading...</p>;
+        return(
+            <>
+                <NavBar />
+                <div className={styles.page}>
+                    <p style={{ color: 'var(--color-text-muted)' }}>Loading...</p>
+                </div>
+            </>
+        )
     }
 
     return(
@@ -38,9 +46,9 @@ export default function Profile(){
                                 <span>Admin Side</span>
                                 <p>You can manage the entire catalog</p>
                             </div>
-                            {/* <Link to="/admin" className={styles.adminBtn}>
+                            <Link    to="/admin" className={styles.adminBtn}>
                                 Admin Panel →
-                            </Link> */}
+                            </Link>
                         </div>
                     )}
 

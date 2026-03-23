@@ -22,6 +22,7 @@ export function AuthProvider({ children }){
         //maj pour l'état en direct sur la page 
         setToken(null);
         setUser(null);
+        navigate('/');
     }
 
     return(
