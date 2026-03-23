@@ -74,3 +74,22 @@ export async function login(req, res){
         })
     }
 }
+
+export async function getMe(req, res){
+    try{
+        const [users] = await database.query(
+            "SELECT id, name, email, role, created_at FROM users WHERE id = ?",
+            [req.user.id]
+        );
+
+        if(users.length === 0){
+            return res.sendStatus(404);
+        }
+        res.status(200).json(users[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send({
+            "message": "an error has occured"
+        });
+    }
+}
