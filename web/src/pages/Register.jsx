@@ -97,7 +97,7 @@ export default function Register() {
             </form>
 
             <div className={styles.poster}>
-                {posterUrl && (
+                {movie && posterUrl && (
                     <>
                         <img src={posterUrl} alt={movie.title} />
                         <div className={styles.posterOverlay}>
