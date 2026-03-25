@@ -2,8 +2,10 @@ import cors from "cors";
 import express from "express";
 import categoryList from "./Controller/CategoryController.js";
 import { logger } from "./Middlewares/logger.js";
+import favoritesRouter from "./routes/favorites.js";
 import moviesRouter from "./routes/movies.js";
 import userRouter from "./routes/users.js";
+import watchlistRouter from "./routes/watchlist.js";
 
 
 const app = express();
@@ -22,6 +24,9 @@ app.use('/users', userRouter)
 
 //categorty relateed routes
 app.get('/categories', categoryList)
+
+app.use('/favorites', favoritesRouter);
+app.use('/watchlist', watchlistRouter);
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
