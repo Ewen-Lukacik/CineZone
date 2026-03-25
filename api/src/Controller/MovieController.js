@@ -80,7 +80,10 @@ export const show = async (req, res) => {
 
     try {
         const [movies] = await database.query(
-            'select * from movies where id=?', 
+            `SELECT m.id, m.title, m.director, m.release_year, m.rating, m.category_id, c.name
+             FROM movies m
+             INNER JOIN categories c ON m.category_id = c.id
+             WHERE m.id = ?`,
             [movieId]
         )
 

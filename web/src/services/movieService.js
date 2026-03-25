@@ -65,3 +65,11 @@ export async function deleteMovie(token, id) {
     if (!response.ok) throw new Error('Failed to delete movie');
     return response.json();
 }
+
+export async function getMovieById(id){
+    const response = await fetch(`${BASE_URL}/movies/${id}`);
+    if(!response.ok){
+        throw new Error('Movie not found');
+    }
+    return response.json();
+}
