@@ -81,3 +81,8 @@
     border-radius: 20px;
     align-self: flex-start;
 }
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
