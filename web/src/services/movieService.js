@@ -1,10 +1,10 @@
 const BASE_URL = '/api';
 
-export async function getMovies({limit = 25, min_rating, category} = {}){
+export async function getMovies({limit = 20, page = 1, min_rating, category, search} = {}){
     /**CONSTRUCTION DE LURL */
     const params = new URLSearchParams();
     params.append('limit', limit);
-
+    params.append('page', page)
     //params optionnels
     if(min_rating){
         params.append('min_rating', min_rating);
@@ -12,6 +12,10 @@ export async function getMovies({limit = 25, min_rating, category} = {}){
 
     if(category){
         params.append('category', category);
+    }
+
+    if(search){
+        params.append('search', search);
     }
 
     //piocher les films via l'api

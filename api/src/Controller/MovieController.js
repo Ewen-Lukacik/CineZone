@@ -1,9 +1,12 @@
 import database from "../database.js";
 
 const movieList = async (req, res) => {
-    const limit = parseInt(req.query.limit);
+    const limit = parseInt(req.query.limit) || 10;
+    const page = parseInt(req.query.page) || 1;
+    const offset = (page - 1) * limit;
     const min_rating = parseFloat(req.query.min_rating);
     const category = req.query.category;
+    const search = req.query.search;
 
     const params = [];
     const conditions = [];
@@ -28,18 +31,40 @@ const movieList = async (req, res) => {
             params.push(category);
         }
 
+        if(search){
+            conditions.push('m.title LIKE ?');
+            params.push(`%${search}%`);
+        }
+
         if(conditions.length != 0){
             sql += ' WHERE ' + conditions.join(" AND ");
         }
 
-        if(limit){
-            sql +=  ' LIMIT ? ';
-            params.push(limit);
-        }
+
+        const countSql = `SELECT COUNT(*) as total FROM movies m 
+                        INNER JOIN categories c on m.category_id = c.id
+                        ${conditions.length ? ' WHERE ' + conditions.join(" AND ") : ''}`;
+        const [countResult] = await database.query(countSql, params);
+        const total = countResult[0].total;
+        
+        sql += ' LIMIT ? OFFSET ?';
+        params.push(limit, offset);
+
+      
+
+
         const [movies] = await database.query(sql, params);
     
         if(movies){
-            res.status(200).json(movies)
+            res.status(200).json({
+                movies,
+                pagination: {
+                    total, 
+                    page,
+                    limit,
+                    totalPages: Math.ceil(total/limit)
+                }
+            });
         } else {
             res.status(404).send({ "message": "No movies found" })
         }
