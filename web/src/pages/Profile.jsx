@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
+import MovieCard from "../components/MovieCard";
 import NavBar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
+import { useFavorites } from "../hooks/useFavorites";
 import { useMe } from "../hooks/useMe";
+import { useWatchlist } from "../hooks/useWatchlist";
 import styles from './Profile.module.css';
 
 export default function Profile(){
     const { user } = useAuth();
     const { profile, isLoading } = useMe();
+    const { favorites } = useFavorites();
+    const { watchlist } = useWatchlist();
 
     if(isLoading){
         return(
@@ -54,16 +59,31 @@ export default function Profile(){
 
                     {/* Films likés */}
                     <section className={styles.section}>
-                        <h3>Liked movies</h3>
-                        <p className={styles.empty}>No liked movies yet</p>
+                        <h3>Liked movies ({favorites.length})</h3>
+                        {favorites.length === 0 ? (
+                            <p className={styles.empty}>No liked movies yet</p>
+                        ) : (
+                            <div className={styles.movieGrid}>
+                                {favorites.map(movie => (
+                                    <MovieCard key={movie.id} movie={movie} />
+                                ))}
+                            </div>
+                        )}
                     </section>
 
                     {/* Watchlist */}
                     <section className={styles.section}>
-                        <h3>Watchlist</h3>
-                        <p className={styles.empty}>Your watchlist is empty</p>
+                        <h3>🎬 Watchlist ({watchlist.length})</h3>
+                        {watchlist.length === 0 ? (
+                            <p className={styles.empty}>Your watchlist is empty</p>
+                        ) : (
+                            <div className={styles.movieGrid}>
+                                {watchlist.map(movie => (
+                                    <MovieCard key={movie.id} movie={movie} />
+                                ))}
+                            </div>
+                        )}
                     </section>
-
                 </main>
             </div>
         </>

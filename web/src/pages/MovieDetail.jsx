@@ -2,15 +2,21 @@ import { Link, useParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import NavBar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
+import { useFavorites } from "../hooks/useFavorites";
 import { useMovie } from "../hooks/useMovie";
 import { useMoviePoster } from "../hooks/useMoviePoster";
 import { useMovies } from "../hooks/useMovies";
+import { useWatchlist } from "../hooks/useWatchlist";
 import styles from './MovieDetail.module.css';
 
 export default function MovieDetail(){
     const { id } = useParams();
     const { movie, isLoading } = useMovie(id);
     const posterUrl = useMoviePoster(movie?.title, movie?.release_year);
+
+    const { isFavorite, add: addFav, remove: removeFav} = useFavorites();
+    const { isWatchlist, add: addWatch, remove: removeWatch} = useWatchlist();
+
 
     const { movies: similarMovies } = useMovies({
         category: movie?.name,
@@ -37,7 +43,39 @@ export default function MovieDetail(){
         )
     }
 
-    console.log(movie)
+    const movieId = parseInt(id);
+    const favorited = isFavorite(movieId);
+    const watched = isWatchlist(movieId);
+
+    async function handleFavorite(){
+        try{
+            if (favorited) {
+                await removeFav.mutateAsync(movieId);
+                addToast('removed from favorites', 'success');
+            } else {
+                await addFav.mutateAsync(movieId);
+                addToast('added to favorites', 'success');
+            }
+        } catch {
+            addToast('An error occurred', 'error');
+        }
+    }
+
+    async function handleWatchlist() {
+        try {
+            if (watched) {
+                await removeWatch.mutateAsync(movieId);
+                addToast('removed from watchlist', 'success');
+            } else {
+                await addWatch.mutateAsync(movieId);
+                addToast('added to watchlist', 'success');
+            }
+        } catch {
+            addToast('An error occurred', 'error');
+        }
+    }
+
+    // console.log(movie)
     return (
         <>
             <NavBar />
@@ -69,11 +107,17 @@ export default function MovieDetail(){
 
                         {user && (
                             <div className={styles.actions}>
-                                <button className={styles.likeBtn}>
-                                    Like
+                                <button
+                                    className={`${styles.likeBtn} ${favorited ? styles.active : ''}`}
+                                    onClick={handleFavorite}
+                                >
+                                    {favorited ? 'Liked' : 'Like'}
                                 </button>
-                                <button className={styles.watchBtn}>
-                                    Watchlist
+                                <button
+                                    className={`${styles.watchBtn} ${watched ? styles.active : ''}`}
+                                    onClick={handleWatchlist}
+                                >
+                                    {watched ? 'In watchlist' : 'Watchlist'}
                                 </button>
                             </div>
                         )}
