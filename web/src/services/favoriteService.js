@@ -32,7 +32,7 @@ export async function addFavorites(token, movie_id){
 }
 
 export async function removeFavorites(token, movie_id){
-    const response = await fetch(`${BASE_URL}/favorite/${movie_id}`, {
+    const response = await fetch(`${BASE_URL}/favorites/${movie_id}`, {
         method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${token}`
