@@ -1,5 +1,41 @@
 import database from "../database.js";
 
+const recalculateMovieRating = async (movieId) => {
+    const [rows] = await database.query(
+        `SELECT AVG(rating) as avg_rating FROM ratings WHERE movie_id = ?`,
+        [movieId]
+    );
+
+    const avg = rows[0].avg_rating ? parseFloat(rows[0].avg_rating).toFixed(1) : null;
+
+    if(avg != null){
+        await database.query(
+            `UPDATE movies SET rating = ? WHERE id = ?`,
+            [avg, movieId]
+        );
+    }
+
+    return avg;
+}
+
+const recalculateMovieRating = async (movieId) => {
+    const [rows] = await database.query(
+        `SELECT AVG(rating) as avg_rating FROM ratings WHERE movie_id = ?`,
+        [movieId]
+    );
+
+    const avg = rows[0].avg_rating ? parseFloat(rows[0].avg_rating).toFixed(1) : null;
+
+    if(avg != null){
+        await database.query(
+            `UPDATE movies SET rating = ? WHERE id = ?`,
+            [avg, movieId]
+        );
+    }
+
+    return avg;
+}
+
 export const insertRating = async (req, res) => {
     const userId = req.user.id;
     const { movie_id, rating } = req.body;
