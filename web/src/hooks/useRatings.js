@@ -21,7 +21,7 @@ export function useRating(movieId){
     })
 
     const remove = useMutation({
-        mutationFn: (rating) => deleteRating(token, movieId, rating),
+        mutationFn: () => deleteRating(token, movieId),
         onSuccess: () => {
             queryClient.invalidateQueries(['rating', movieId]);
             queryClient.invalidateQueries(['movie', movieId]);
