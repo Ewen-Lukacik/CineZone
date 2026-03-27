@@ -4,6 +4,7 @@ import categoryList from "./Controller/CategoryController.js";
 import { logger } from "./Middlewares/logger.js";
 import favoritesRouter from "./routes/favorites.js";
 import moviesRouter from "./routes/movies.js";
+import ratingsRouter from "./routes/ratings.js";
 import userRouter from "./routes/users.js";
 import watchlistRouter from "./routes/watchlist.js";
 
@@ -27,6 +28,8 @@ app.get('/categories', categoryList)
 
 app.use('/favorites', favoritesRouter);
 app.use('/watchlist', watchlistRouter);
+
+app.use('/ratings', ratingsRouter)
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
