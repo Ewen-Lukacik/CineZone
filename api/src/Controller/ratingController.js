@@ -28,7 +28,7 @@ export const insertRating = async (req, res) => {
         })
     }
 
-    if(!rating < 1 || rating > 10){
+    if(rating < 1 || rating > 10){
         return res.status(400).json({
             message: "rating must be between 1 and 10"
         })
@@ -72,7 +72,7 @@ export const deleteRating = async (req, res) => {
         }
 
         //upd le movie rating
-        const newAvg = await recalculateMovieRating(movie_id);
+        const newAvg = await recalculateMovieRating(movieId);
 
         res.status(200).json({
             message: "rating deleted",
@@ -134,7 +134,7 @@ export const getSuggestions = async (req, res) => {
             topCategories.map(async (cat) => {
                 const [movies] = await database.query(
                     `
-                    SELECT m.id, m.title, m.director, m.release_year, m.rating, m.category, c.name
+                    SELECT m.id, m.title, m.director, m.release_year, m.rating, m.category_id, c.name
                     FROM movies m
                     JOIN categories c ON m.category_id = c.id
                     WHERE m.category_id = ?
