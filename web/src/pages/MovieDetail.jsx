@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import NavBar from "../components/Navbar";
@@ -6,6 +7,7 @@ import { useFavorites } from "../hooks/useFavorites";
 import { useMovie } from "../hooks/useMovie";
 import { useMoviePoster } from "../hooks/useMoviePoster";
 import { useMovies } from "../hooks/useMovies";
+import { useRating } from "../hooks/useRatings";
 import { useWatchlist } from "../hooks/useWatchlist";
 import styles from './MovieDetail.module.css';
 
@@ -25,6 +27,13 @@ export default function MovieDetail(){
 
     const user = useAuth();
 
+    const movieId = parseInt(id);
+    const favorited = isFavorite(movieId);
+    const watched = isWatchlist(movieId);
+    const { userRating, insert, remove: removeRating } = useRating(movieId);
+    const [hovered, setHovered] = useState(null);
+    const hasRated = userRating !== null;
+
     if(isLoading){
         return(
             <>
@@ -42,10 +51,6 @@ export default function MovieDetail(){
             </>
         )
     }
-
-    const movieId = parseInt(id);
-    const favorited = isFavorite(movieId);
-    const watched = isWatchlist(movieId);
 
     async function handleFavorite(){
         try{
@@ -119,6 +124,38 @@ export default function MovieDetail(){
                                 >
                                     {watched ? 'In watchlist' : 'Watchlist'}
                                 </button>
+
+                                 <div className={styles.ratingWidget}>
+                                    <span className={styles.ratingLabel}>
+                                        {hasRated ? `Your rating: ${userRating}/10` : 'Rate:'}
+                                    </span>
+                                    <div className={styles.stars}>
+                                        {[...Array(10)].map((_, i) => {
+                                            const value = i + 1;
+                                            const isActive = value <= (hovered ?? userRating ?? 0);
+                                            return (
+                                                <button
+                                                    key={value}
+                                                    className={`${styles.star} ${isActive ? styles.starActive : ''}`}
+                                                    onMouseEnter={() => setHovered(value)}
+                                                    onMouseLeave={() => setHovered(null)}
+                                                    onClick={() => insert.mutate(value)}
+                                                    title={`${value}/10`}
+                                                >
+                                                    stars
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
+                                    {hasRated && (
+                                        <button
+                                            className={styles.deleteRatingBtn}
+                                            onClick={() => removeRating.mutate()}
+                                        >
+                                            Remove
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         )}
                     </div>

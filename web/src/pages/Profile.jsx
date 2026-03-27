@@ -4,6 +4,7 @@ import NavBar from "../components/Navbar";
 import { useAuth } from "../context/AuthContext";
 import { useFavorites } from "../hooks/useFavorites";
 import { useMe } from "../hooks/useMe";
+import { useSuggestions } from "../hooks/useSuggestions";
 import { useWatchlist } from "../hooks/useWatchlist";
 import styles from './Profile.module.css';
 
@@ -12,6 +13,7 @@ export default function Profile(){
     const { profile, isLoading } = useMe();
     const { favorites } = useFavorites();
     const { watchlist } = useWatchlist();
+    const { suggestions } = useSuggestions();
 
     if(isLoading){
         return(
@@ -40,6 +42,24 @@ export default function Profile(){
                     <p className={styles.since}>
                         Member since {new Date(profile?.created_at).toLocaleDateString()}
                     </p>
+
+                    {suggestions.length > 0 && (
+                        <div className={styles.suggestions}>
+                            <h3 className={styles.suggestionsTitle}>Best suggestions:</h3>
+                            {suggestions.map(({ category, suggested_movie }) => (
+                                <div key={category.id} className={styles.suggestionBlock}>
+                                    <div className={styles.suggestionHeader}>
+                                        <span className={styles.categoryTag}>{category.name}</span>
+                                        <span className={styles.categoryAvg}>{category.avg_rating}/10</span>
+                                    </div>
+                                    {suggested_movie
+                                        ? <MovieCard movie={suggested_movie} />
+                                        : <p className={styles.empty}>You watched everything</p>
+                                    }
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </aside>
 
                 {/* SIDEBAR MENUS  */}
