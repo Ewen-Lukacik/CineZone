@@ -18,24 +18,6 @@ const recalculateMovieRating = async (movieId) => {
     return avg;
 }
 
-const recalculateMovieRating = async (movieId) => {
-    const [rows] = await database.query(
-        `SELECT AVG(rating) as avg_rating FROM ratings WHERE movie_id = ?`,
-        [movieId]
-    );
-
-    const avg = rows[0].avg_rating ? parseFloat(rows[0].avg_rating).toFixed(1) : null;
-
-    if(avg != null){
-        await database.query(
-            `UPDATE movies SET rating = ? WHERE id = ?`,
-            [avg, movieId]
-        );
-    }
-
-    return avg;
-}
-
 export const insertRating = async (req, res) => {
     const userId = req.user.id;
     const { movie_id, rating } = req.body;
@@ -120,6 +102,63 @@ export const getRating = async (req, res) => {
         res.status(200).json({
             user_rating: userRating
         });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send({"message": "An error has occurred"})
+    }
+}
+
+export const getSuggestions = async (req, res) => {
+    const userId = req.user.id;
+
+    try{
+        const [topCategories] = await database.query(
+            `
+            SELECT c.id, c.name, AVG(r.rating) as avg_rating
+            FROM ratings r
+            JOIN movies m ON r.movie_id = m.id
+            JOIN categories c ON m.category_id = c.id
+            WHERE r.user_id = ?
+            GROUP BY c.id, c.name
+            ORDER BY avg_rating DESC
+            LIMIT 3
+            `,
+            [userId]
+        );
+
+        if(topCategories.length === 0){
+            return res.status(200).json([]);
+        }
+
+        const suggestions = await Promise.all(
+            topCategories.map(async (cat) => {
+                const [movies] = await database.query(
+                    `
+                    SELECT m.id, m.title, m.director, m.release_year, m.rating, m.category, c.name
+                    FROM movies m
+                    JOIN categories c ON m.category_id = c.id
+                    WHERE m.category_id = ?
+                    AND m.id NOT IN(
+                        SELECT movie_id FROM ratings WHERE user_id = ?    
+                    )
+                    ORDER BY m.rating DESC
+                    LIMIT 1
+                    `,
+                    [cat.id, userId]
+                );
+
+                return{
+                    category: {
+                        id: cat.id,
+                        name: cat.name,
+                        avg_rating: parseFloat(cat.avg_rating).toFixed(1),
+                    },
+                    suggested_movie: movies[0] ?? null,
+                };
+            })
+        );
+
+        res.status(200).json(suggestions);
     } catch (err) {
         console.log(err);
         res.status(500).send({"message": "An error has occurred"})
