@@ -142,7 +142,7 @@ export default function MovieDetail(){
                                                     onClick={() => insert.mutate(value)}
                                                     title={`${value}/10`}
                                                 >
-                                                    stars
+                                                    ☆
                                                 </button>
                                             );
                                         })}
