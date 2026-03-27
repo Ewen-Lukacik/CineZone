@@ -14,7 +14,7 @@ export async function getRating(token, movieId){
 }
 
 export async function insertRating(token, movieId, rating){
-    const response = await fetch(`${BASE_URL}/ratings/ratings`, {
+    const response = await fetch(`${BASE_URL}/ratings`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
