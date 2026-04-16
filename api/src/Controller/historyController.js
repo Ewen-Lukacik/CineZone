@@ -15,7 +15,10 @@ export async function getHistory(req, res) {
     );
     res.status(200).json(history);
   } catch (err) {
-    console.error(err);
+    logger.error("failed to get history", {
+      error: err.message,
+      user_id: req.user?.id,
+    });
     res.status(500).json({
       message: "An error has ocurred",
     });
@@ -37,7 +40,10 @@ export async function addHistory(req, res) {
       message: "history updated",
     });
   } catch (err) {
-    console.error(err);
+    logger.error("failed to remove from history", {
+      error: err.message,
+      user_id: req.user?.id,
+    });
     res.status(500).json({
       message: "An error has ocurred",
     });

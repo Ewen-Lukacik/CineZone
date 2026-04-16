@@ -8,6 +8,7 @@ services:
       - "3000:3000"
     volumes:
       - ./api/src:/app/src
+      - ./api/logs:/app/logs
       # - ./package.json:/app/package.json
       # - /app/node_modules
     environment:

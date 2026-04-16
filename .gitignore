@@ -4,3 +4,4 @@
 */mysql-data
 mysql-data
 *.bru
+api/logs/

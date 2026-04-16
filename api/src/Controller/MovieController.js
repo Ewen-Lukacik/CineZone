@@ -1,4 +1,5 @@
 import database from "../database.js";
+import { logger } from "../Middlewares/logger.js";
 
 const movieList = async (req, res) => {
   const limit = parseInt(req.query.limit) || 10;
@@ -65,7 +66,9 @@ const movieList = async (req, res) => {
       res.status(404).send({ message: "No movies found" });
     }
   } catch (err) {
-    // console.log(err)
+    logger.error("Failed to fetch movies", {
+      error: err.message,
+    });
     res.status(500).send({ message: "An error has occurred" });
   }
 };
@@ -88,7 +91,10 @@ export const show = async (req, res) => {
       res.sendStatus(404);
     }
   } catch (err) {
-    console.log(err);
+    logger.error("Failed to fetch movie", {
+      error: err.message,
+      movie_id: movieId,
+    });
     res.status(500).send({ message: "An error has occurred" });
   }
 };
@@ -114,6 +120,10 @@ export const create = async (req, res) => {
       );
 
       if (newMovie) {
+        logger.info("Movie created", {
+          movie_id: newMovie.insertId,
+          title,
+        });
         res.status(201).json({
           message: "Movie added successfully",
           movieId: newMovie.insertId,
@@ -121,7 +131,10 @@ export const create = async (req, res) => {
         });
       }
     } catch (err) {
-      console.log(err);
+      logger.error("Failed to create movie", {
+        error: err.message,
+        title,
+      });
       res.status(500).send({ message: "An error has occured" });
     }
   }
@@ -149,6 +162,10 @@ export const update = async (req, res) => {
       );
 
       if (updatedMovie) {
+        logger.info("movie updated", {
+          movie_id: movieId,
+          title,
+        });
         res.status(201).json({
           message: "Movie updated successfully",
           name: title,
@@ -156,7 +173,9 @@ export const update = async (req, res) => {
         });
       }
     } catch (err) {
-      console.log(err);
+      logger.error("Failed to update movie", {
+        error: err.message,
+      });
       res.status(500).send({ message: "An error has occured" });
     }
   }
@@ -172,6 +191,9 @@ export const destroy = async (req, res) => {
     );
 
     if (deletedMovie.affectedRows != 0) {
+      logger.info("movie deleted", {
+        movie_id: movieId,
+      });
       res.status(200).json({
         message: "Movie deleted successfully",
       });
@@ -179,7 +201,10 @@ export const destroy = async (req, res) => {
       res.status(404).json({ message: "No movies found to delete" });
     }
   } catch (err) {
-    console.log(err);
+    logger.error("Failed to delete movie", {
+      error: err.message,
+      movie_id: movieId,
+    });
     res.status(500).send({ message: "An error has occurred" });
   }
 };

@@ -1,7 +1,7 @@
 import cors from "cors";
 import express from "express";
 import categoryList from "./Controller/CategoryController.js";
-import { logger } from "./Middlewares/logger.js";
+import { requestLogger } from "./Middlewares/logger.js";
 import favoritesRouter from "./routes/favorites.js";
 import historyRouter from "./routes/history.js";
 import moviesRouter from "./routes/movies.js";
@@ -16,7 +16,7 @@ app.use(
   }),
 );
 
-const middlewares = [express.json(), logger];
+const middlewares = [express.json(), requestLogger];
 app.use(middlewares); //middleware
 
 app.use("/movies", moviesRouter);
