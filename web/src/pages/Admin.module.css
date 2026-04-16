@@ -1,103 +1,126 @@
 .page {
-    width: 85%;
-    margin: 2rem auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+  width: 85%;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header h1 {
-    color: var(--color-primary);
-    font-size: 1.8rem;
+  color: var(--color-primary);
+  font-size: 1.8rem;
 }
 
 .addBtn {
-    background: var(--color-primary);
-    color: var(--color-bg);
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: opacity 0.2s;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
 .addBtn:hover {
-    opacity: 0.85;
+  opacity: 0.85;
 }
 
 .table {
-    width: 100%;
-    border-collapse: collapse;
-    background: var(--color-bg-card);
-    border-radius: 12px;
-    overflow: hidden;
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-bg-card);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .table th {
-    background: var(--color-bg-secondary);
-    color: var(--color-text-muted);
-    padding: 1rem;
-    text-align: left;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  background: var(--color-bg-secondary);
+  color: var(--color-text-muted);
+  padding: 1rem;
+  text-align: left;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .table td {
-    padding: 1rem;
-    color: var(--color-text);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 0.95rem;
+  padding: 1rem;
+  color: var(--color-text);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.95rem;
 }
 
 .table tr:last-child td {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .table tr:hover td {
-    background: rgba(100, 255, 218, 0.03);
+  background: rgba(100, 255, 218, 0.03);
 }
 
 .actions {
-    display: flex;
-    gap: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .editBtn {
-    background: transparent;
-    border: 1px solid var(--color-accent);
-    color: var(--color-accent);
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.2s;
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
 }
 
 .editBtn:hover {
-    background: var(--color-accent);
-    color: var(--color-bg);
+  background: var(--color-accent);
+  color: var(--color-bg);
 }
 
 .deleteBtn {
-    background: transparent;
-    border: 1px solid #ff6b6b;
-    color: #ff6b6b;
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.2s;
+  background: transparent;
+  border: 1px solid #ff6b6b;
+  color: #ff6b6b;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
 }
 
 .deleteBtn:hover {
-    background: #ff6b6b;
-    color: var(--color-bg);
+  background: #ff6b6b;
+  color: var(--color-bg);
+}
+
+@media (max-width: 768px) {
+  .page {
+    width: 95%;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .table td,
+  .table th {
+    padding: 0.75rem 0.6rem;
+  }
 }

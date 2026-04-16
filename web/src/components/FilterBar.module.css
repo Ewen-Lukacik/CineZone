@@ -1,59 +1,79 @@
 .bar {
-    width: 70%;
-    margin: 1.5rem auto 0;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
+  width: 70%;
+  margin: 1.5rem auto 0;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .search {
-    flex: 1;
-    background: var(--color-bg-card);
-    border: 1px solid rgba(100, 255, 218, 0.1);
-    border-radius: 6px;
-    padding: 0.7rem 1rem;
-    color: var(--color-text);
-    font-size: 0.95rem;
-    transition: border 0.2s;
+  flex: 1;
+  background: var(--color-bg-card);
+  border: 1px solid rgba(100, 255, 218, 0.1);
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  color: var(--color-text);
+  font-size: 0.95rem;
+  transition: border 0.2s;
 }
 
 .search:focus {
-    outline: none;
-    border-color: var(--color-primary);
+  outline: none;
+  border-color: var(--color-primary);
 }
 
 .select {
-    background: var(--color-bg-card);
-    border: 1px solid rgba(100, 255, 218, 0.1);
-    border-radius: 6px;
-    padding: 0.7rem 1rem;
-    color: var(--color-text);
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: border 0.2s;
+  background: var(--color-bg-card);
+  border: 1px solid rgba(100, 255, 218, 0.1);
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  color: var(--color-text);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border 0.2s;
 }
 
 .select:focus {
-    outline: none;
-    border-color: var(--color-primary);
+  outline: none;
+  border-color: var(--color-primary);
 }
 
 .select option {
-    background: var(--color-bg-secondary);
+  background: var(--color-bg-secondary);
 }
 
 .resetBtn {
-    background: transparent;
-    border: 1px solid var(--color-text-muted);
-    color: var(--color-text-muted);
-    padding: 0.7rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
+  background: transparent;
+  border: 1px solid var(--color-text-muted);
+  color: var(--color-text-muted);
+  padding: 0.7rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .resetBtn:hover {
-    border-color: var(--color-text);
-    color: var(--color-text);
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+@media (max-width: 768px) {
+  .bar {
+    width: 95%;
+    flex-wrap: wrap;
+  }
+
+  .search {
+    width: 100%;
+    flex: unset;
+  }
+
+  .select {
+    flex: 1;
+  }
+
+  .resetBtn {
+    width: 100%;
+  }
 }
