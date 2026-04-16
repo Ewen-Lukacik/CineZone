@@ -1,27 +1,36 @@
 import cors from "cors";
 import express from "express";
 import categoryList from "./Controller/CategoryController.js";
-import { logger } from "./Middlewares/logger.js";
+import { requestLogger } from "./Middlewares/logger.js";
+import favoritesRouter from "./routes/favorites.js";
+import historyRouter from "./routes/history.js";
 import moviesRouter from "./routes/movies.js";
+import ratingsRouter from "./routes/ratings.js";
 import userRouter from "./routes/users.js";
-
+import watchlistRouter from "./routes/watchlist.js";
 
 const app = express();
-app.use(cors({
-  origin: "http://localhost:5173"
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
 
-const middlewares = [
-  express.json(),
-  logger
-]
+const middlewares = [express.json(), requestLogger];
 app.use(middlewares); //middleware
 
-app.use('/movies', moviesRouter);
-app.use('/users', userRouter)
+app.use("/movies", moviesRouter);
+app.use("/users", userRouter);
 
 //categorty relateed routes
-app.get('/categories', categoryList)
+app.get("/categories", categoryList);
+
+app.use("/favorites", favoritesRouter);
+app.use("/watchlist", watchlistRouter);
+
+app.use("/ratings", ratingsRouter);
+
+app.use("/history", historyRouter);
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");

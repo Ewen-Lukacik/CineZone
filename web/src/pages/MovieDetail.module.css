@@ -1,0 +1,265 @@
+.page {
+  width: 75%;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.hero {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.poster {
+  width: 300px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.noPoster {
+  width: 300px;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-card);
+  border-radius: 12px;
+  font-size: 4rem;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding-top: 1rem;
+  justify-items: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--color-text-muted);
+  font-size: 1rem;
+}
+
+.category {
+  background: var(--color-bg-card);
+  color: var(--color-accent);
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+.ratingWidget {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 1rem 1.2rem;
+  background: var(--color-bg-secondary);
+  border: 1px solid rgba(100, 255, 218, 0.08);
+  border-radius: 10px;
+  width: fit-content;
+}
+
+.ratingLabel {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.3px;
+}
+
+.stars {
+  display: flex;
+  gap: 0.15rem;
+}
+
+.star {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.6rem;
+  color: rgba(245, 197, 24, 0.25); /* étoile vide : jaune très atténué */
+  padding: 0;
+  line-height: 1;
+  transition:
+    color 0.1s ease,
+    transform 0.1s ease;
+}
+
+.starActive {
+  color: #f5c518; /* étoile active : jaune vif */
+}
+
+.deleteRatingBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 107, 107, 0.4);
+  color: rgba(255, 107, 107, 0.7);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.2rem;
+  align-self: flex-end;
+}
+
+.deleteRatingBtn:hover {
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.08);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.5rem;
+  justify-items: center;
+}
+
+.hotActions {
+  display: flex;
+  gap: 2rem;
+}
+
+.likeBtn,
+.watchBtn {
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: bold;
+}
+
+.likeBtn {
+  background: transparent;
+  border: 2px solid #ff6b6b;
+  color: #ff6b6b;
+}
+
+.likeBtn:hover {
+  background: #ff6b6b;
+  color: var(--color-bg);
+}
+
+.watchBtn {
+  background: transparent;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.watchBtn:hover {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.backBtn {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  transition: color 0.2s;
+  width: fit-content;
+}
+
+.backBtn:hover {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.similar {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  justify-items: center;
+  background: var(--color-bg-card);
+  border-radius: 1rem;
+  color: var(--color-bg);
+}
+
+.similar h2 {
+  color: var(--color-text);
+  font-size: 1.3rem;
+}
+
+.similarGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+  }
+
+  .poster {
+    width: 100%;
+  }
+
+  .similarGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.likeBtn.active {
+  background: #ff6b6b;
+  color: var(--color-bg);
+}
+
+.watchBtn.active {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+@media (max-width: 768px) {
+  .page {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .likeBtn,
+  .watchBtn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.4rem;
+  }
+
+  .similarGrid {
+    grid-template-columns: 1fr;
+  }
+}

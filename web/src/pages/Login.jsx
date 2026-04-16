@@ -64,7 +64,7 @@ export default function Login() {
                 <p>No account ? <Link to="/register">Register</Link></p>
             </form>
             <div className={styles.poster}>
-                {posterUrl && (
+                {movie && posterUrl && (
                     <>
                         <img src={posterUrl} alt={movie.title} />
                         <div className={styles.posterOverlay}>
